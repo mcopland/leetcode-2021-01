@@ -102,8 +102,43 @@ class Jan02:
         if left:
             return left
 
-        right = self.get_target_copy(self, original.right, cloned.right, target)
+        right = self.get_target_copy(self, original.right, cloned.right,
+                                     target)
         if right:
             return right
 
         return None
+
+
+# countArrangement
+class Jan03:
+    """Beautiful Arrangement
+    Suppose you have n integers from 1 to n. We define a beautiful arrangement
+    as an array that is constructed by these n numbers successfully if one of
+    the following is true for the ith position (1 <= i <= n) in this array:
+    - The number at the ith position is divisible by i.
+    - i is divisible by the number at the ith position.
+
+    Given an integer n, return the number of the beautiful arrangements that
+    you can construct.
+
+    Constraints:
+    - 1 <= n <= 15
+    """
+    def count_arrangement(self, n: int) -> int:
+        def backtrack(pos, visited):
+            if pos < 1:
+                return 1
+
+            count = 0
+            for i in range(n, 0, -1):
+                if (not visited[i] and (pos % i == 0 or i % pos == 0)):
+                    visited[i] = True
+                    count += backtrack(pos-1, visited)
+                    visited[i] = False
+            return count
+
+        if n < 4:
+            return n
+        visited = [False] * (n+1)
+        return backtrack(n, visited)
