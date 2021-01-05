@@ -1,4 +1,4 @@
-from models import TreeNode
+from models import ListNode, TreeNode
 from typing import List
 
 
@@ -20,3 +20,12 @@ def tree_constructor(node_list: List[int]) -> TreeNode:
             ptr += 1
         current = next_node
     return root
+
+
+def linked_list_constructor(node_list: List[int]) -> ListNode:
+    head = ListNode()
+    curr = head
+    for i in range(len(node_list)):
+        curr.next = ListNode(node_list[i])
+        curr = curr.next
+    return head.next

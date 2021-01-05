@@ -1,5 +1,6 @@
-from helpers import tree_constructor
+# from helpers import tree_constructor
 
+from helpers import linked_list_constructor
 import main
 import pytest
 
@@ -58,3 +59,24 @@ def test_can_form_array(arr, pieces, true_false):
 def test_count_arrangement(n, result):
     card = main.Jan03
     assert card.count_arrangement(card, n) == result
+
+
+@pytest.mark.parametrize("nodes1, nodes2, nodes_sorted", [
+    ([1, 2, 4], [1, 3, 4], [1, 1, 2, 3, 4, 4]),
+    ([], [], []),
+    ([], [0], [0]),
+    ([1, 2, 3, 4], [5, 6, 7, 8], [1, 2, 3, 4, 5, 6, 7, 8]),
+    ([5, 6, 7, 8], [1, 2, 3, 4], [1, 2, 3, 4, 5, 6, 7, 8])])
+def test_merge_two_lists(nodes1, nodes2, nodes_sorted):
+    card = main.Jan04
+    l1 = linked_list_constructor(nodes1)
+    l2 = linked_list_constructor(nodes2)
+    expected = linked_list_constructor(nodes_sorted)
+    actual = card.merge_two_lists(card, l1, l2)
+    while expected and actual:
+        if expected.val != actual.val:
+            assert False
+        expected = expected.next
+        actual = actual.next
+
+    assert not expected and not actual
