@@ -3,6 +3,7 @@ from typing import List
 
 
 def tree_constructor(node_list: List[int]) -> TreeNode:
+    """Returns root of tree constructed from List[int]."""
     root = TreeNode(node_list[0])
     current = [root]
     ptr = 1
@@ -23,6 +24,7 @@ def tree_constructor(node_list: List[int]) -> TreeNode:
 
 
 def linked_list_constructor(node_list: List[int]) -> ListNode:
+    """Returns head of linked list constructed from List[int]."""
     head = ListNode()
     curr = head
     for i in range(len(node_list)):

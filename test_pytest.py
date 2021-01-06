@@ -80,3 +80,23 @@ def test_merge_two_lists(nodes1, nodes2, nodes_sorted):
         actual = actual.next
 
     assert not expected and not actual
+
+
+@pytest.mark.parametrize("head, expected", [
+    ([1, 2, 3, 3, 4, 4, 5], [1, 2, 5]),
+    ([1, 1, 1, 2, 3], [2, 3]),
+    ([1, 1, 1, 1, 1], []),
+    ([], []),
+    ([], [])])
+def test_delete_duplicates(head, expected):
+    card = main.Jan05
+    expected = linked_list_constructor(expected)
+    actual_list = linked_list_constructor(head)
+    actual = card.delete_duplicates(card, actual_list)
+    while expected and actual:
+        if expected.val != actual.val:
+            assert False
+        expected = expected.next
+        actual = actual.next
+
+    assert not expected and not actual

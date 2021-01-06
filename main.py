@@ -180,3 +180,32 @@ class Jan04:
         curr.next = l1 if l1 else l2
 
         return new_list.next
+
+
+# deleteDuplicates
+class Jan05:
+    """Remove Duplicates from Sorted List II
+    Given the head of a sorted linked list, delete all nodes that have
+    duplicate numbers, leaving only distinct numbers from the original list.
+    Return the linked list sorted as well.
+
+    Constraints:
+    - The number of nodes in the list is in the range [0, 300].
+    - -100 <= Node.val <= 100
+    - The list is guaranteed to be sorted in ascending order.
+    """
+    def delete_duplicates(self, head: ListNode) -> ListNode:
+        sentinel = prev = ListNode(0, head)
+
+        while head and head.next:
+            if head.val == head.next.val:
+                # Skip all duplicates.
+                while head.next and head.val == head.next.val:
+                    head = head.next
+                head = head.next
+                prev.next = head
+            else:
+                prev = prev.next
+                head = head.next
+
+        return sentinel.next
