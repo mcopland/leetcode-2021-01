@@ -100,3 +100,17 @@ def test_delete_duplicates(head, expected):
         actual = actual.next
 
     assert not expected and not actual
+
+
+@pytest.mark.parametrize("arr, k, result", [
+    ([2, 3, 4, 7, 11], 5, 9),
+    ([1, 2, 3, 4], 2, 6),
+    ([1, 2, 3, 4], 16, 20),
+    ([1, 2, 3, 4], 100, 104),
+    ([1, 5, 15, 100], 35, 38),
+    ([1, 100], 16, 17),
+    ([2], 1, 1),
+    ([1, 2, 3, 4, 5, 15, 25], 14, 20)])
+def test_find_kth_positive(arr, k, result):
+    card = main.Jan06
+    assert card.find_kth_positive(card, arr, k) == result
