@@ -114,3 +114,20 @@ def test_delete_duplicates(head, expected):
 def test_find_kth_positive(arr, k, result):
     card = main.Jan06
     assert card.find_kth_positive(card, arr, k) == result
+
+
+@pytest.mark.parametrize("s, result", [
+    # The answer is "abc", with the length of 3.
+    ("abcabcbb", 3),
+    # The answer is "b", with the length of 1.
+    ("bbbbb", 1),
+    # The answer is "wke", with the length of 3. Notice that the answer must be
+    # a substring, "pwke" is a subsequence and not a substring.
+    ("pwwkew", 3),
+    ("abababa", 2),
+    ("aabbaabb", 2),
+    ("abcdeefghij", 6),
+    ("", 0)])
+def test_length_of_longest_substring(s, result):
+    card = main.Jan07
+    assert card.length_of_longest_substring(card, s) == result

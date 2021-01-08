@@ -256,3 +256,29 @@ class Jan06:
         #         missing += (arr[i + 1] - arr[i] - 1)
 
         # return len(arr) + missing + k
+
+
+# lengthOfLongestSubstring
+class Jan07:
+    def length_of_longest_substring(self, s: str) -> int:
+        """Longest Substring Without Repeating Characters
+
+        Given a string `s`, find the length of the longest substring without
+        repeating characters.
+        """
+        substr = set()
+        slow = fast = longest = 0
+
+        while slow < len(s) and fast < len(s):
+            if s[fast] not in substr:
+                # Add unseen char and move fast pointer forward.
+                substr.add(s[fast])
+                fast += 1
+                # Check if new max length is found.
+                longest = max(longest, fast - slow)
+            else:
+                # Move slow pointer forward.
+                substr.remove(s[slow])
+                slow += 1
+
+        return longest
