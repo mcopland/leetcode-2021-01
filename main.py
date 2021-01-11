@@ -1,4 +1,4 @@
-from models import ListNode, TreeNode
+from models import ListNode, Node, TreeNode
 from typing import List
 
 
@@ -282,3 +282,181 @@ class Jan07:
                 slow += 1
 
         return longest
+
+
+# findRoot and arrayStringsAreEqual
+class Jan08:
+    def find_root(self, tree: List['Node']) -> 'Node':
+        """Find Root of N-Ary Tree
+
+        You are given all the nodes of an N-ary tree as an array of Node
+        objects, where each node has a unique value.
+
+        Return the root of the N-ary `tree`.
+
+        Constraints:
+        - The total number of nodes is between [1, 5 * 104].
+        - Each node has a unique value.
+
+        Follow up:
+        - Could you solve this problem in constant space complexity with a
+          linear time algorithm?
+
+        Hints:
+        - Node with indegree 0 is the root.
+        """
+
+        '''
+        # Time and Space complexity: O(n)
+        # Faster algorithm but takes more space.
+
+        # Contains all child nodes.
+        seen = set()
+
+        # Add all child nodes to set.
+        for node in tree:
+            for child in node.children:
+                # Add each node's unique value.
+                seen.add(child.val)
+
+        # Find node that is not in set.
+        for node in tree:
+            if node.val not in seen:
+                return node
+
+        # Time complexity: O(n)
+        # Space complexity: O(1)
+        '''
+
+        val_sum = 0
+
+        for node in tree:
+            # Parent node value is added.
+            val_sum += node.val
+            for child in node.children:
+                # Child node value is deducted.
+                val_sum -= child.val
+
+        for node in tree:
+            if node.val == val_sum:
+                return node
+
+    def array_strings_are_equal(self, word1: List[str],
+                                word2: List[str]) -> bool:
+        """Check If Two String Arrays are Equivalent
+        Given two string arrays `word1` and `word2`, return true if the two
+        arrays represent the same string, and false otherwise.
+
+        A string is represented by an array if the array elements concatenated
+        in order forms the string.
+
+        Constraints:
+        - 1 <= word1.length, word2.length <= 103
+        - 1 <= word1[i].length, word2[i].length <= 103
+        - 1 <= sum(word1[i].length), sum(word2[i].length) <= 103
+        - word1[i] and word2[i] consist of lowercase letters.
+
+        Hints:
+        - Concatenate all strings in the first array into a single string in
+          the given order, the same for the second array.
+        - Both arrays represent the same string if and only if the generated
+          strings are the same.
+        """
+        str1 = str2 = ""
+
+        for piece in word1:
+            str1 += piece
+        for piece in word2:
+            str2 += piece
+
+        return str1 == str2
+
+
+# ladderLength
+class Jan09:
+    def ladder_length(self, beginWord: str, endWord: str,
+                      wordList: List[str]) -> int:
+        """Word Ladder
+
+        Given two words `beginWord` and `endWord`, and a dictionary
+        `wordList`, return the length of the shortest transformation sequence
+        from `beginWord` to `endWord`, such that:
+        - Only one letter can be changed at a time.
+        - Each transformed word must exist in the word list.
+
+        Return 0 if there is no such transformation sequence.
+
+        Constraints:
+        - 1 <= `beginWord.length` <= 100
+        - `endWord.length` == `beginWord.length`
+        - 1 <= `wordList.length` <= 5000
+        - `wordList[i].length` == `beginWord.length`
+        - `beginWord`, `endWord`, and `wordList[i]` consist of lowercase
+          English letters.
+        - `beginWord` != `endWord`
+        - All the strings in `wordList` are unique.
+        """
+        from collections import deque
+        from typing import DefaultDict
+
+        # Solution given by LeetCode discussion:
+        if (endWord not in wordList or not endWord
+                or not beginWord or not wordList):
+            return 0
+        length = len(beginWord)
+        all_combo_dict = DefaultDict(list)
+        for word in wordList:
+            for i in range(length):
+                all_combo_dict[word[:i] + "*" + word[i+1:]].append(word)
+        queue = deque([(beginWord, 1)])
+        visited = set()
+        visited.add(beginWord)
+        while queue:
+            current_word, level = queue.popleft()
+            for i in range(length):
+                intermediate_word = current_word[:i] + "*" + current_word[i+1:]
+                for word in all_combo_dict[intermediate_word]:
+                    if word == endWord:
+                        return level + 1
+                    if word not in visited:
+                        visited.add(word)
+                        queue.append((word, level + 1))
+        return 0
+
+
+# createSortedArray
+class Jan10:
+    def create_sorted_array(self, instructions: List[int]) -> int:
+        """Create Sorted Array through Instructions
+
+        Given an integer array `instructions`, you are asked to create a sorted
+        array from the elements in `instructions`. You start with an empty
+        container `nums`. For each element from left to right in
+        `instructions`, insert it into `nums`. The cost of each insertion is
+        the minimum of the following:
+
+        - The number of elements currently in `nums` that are strictly less
+          than `instructions[i]`.
+        - The number of elements currently in `nums` that are strictly greater
+          than `instructions[i]`.
+
+        For example, if inserting element 3 into `nums` = [1,2,3,5], the cost
+        of insertion is min(2, 1) (elements 1 and 2 are less than 3, element 5
+        is greater than 3) and `nums` will become [1,2,3,3,5].
+
+        Return the total cost to insert all elements from `instructions` into
+        `nums`. Since the answer may be large, return it modulo 10^9 + 7
+        """
+        import bisect
+
+        nums = []
+        cost = 0
+
+        for i, val in enumerate(instructions):
+            left = bisect.bisect_left(nums, val)
+            right = bisect.bisect(nums, val)
+            cost += min(left, i - right)
+            # nums.insert(r, val)
+            nums[right:right] = [val]
+
+        return cost % (10**9 + 7)

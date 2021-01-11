@@ -1,4 +1,4 @@
-# from helpers import tree_constructor
+# from helpers import binary_tree_constructor
 
 from helpers import linked_list_constructor
 import main
@@ -33,7 +33,7 @@ def test_can_form_array(arr, pieces, true_false):
 #     ([1, 2, None, 3], 2)])
 # def test_get_target_copy(nodes, target):
 #     card = main.Jan02
-#     original = tree_constructor(nodes)
+#     original = binary_tree_constructor(nodes)
 #     cloned = original
 #     case_1 = card.get_target_copy(card, original, cloned, target)
 #     case_2 = card.get_target_copy(card, cloned, original, target)
@@ -131,3 +131,40 @@ def test_find_kth_positive(arr, k, result):
 def test_length_of_longest_substring(s, result):
     card = main.Jan07
     assert card.length_of_longest_substring(card, s) == result
+
+
+@pytest.mark.parametrize("word1, word2, true_false", [
+    # "ab" + "c" == "a" + "bc"
+    (["ab", "c"], ["a", "bc"], True),
+    (["a", "cb"], ["ab", "c"], False),
+    (["abc", "d", "defg"], ["abcddefg"], True),
+    (["a"], ["a"], True),
+    (["a", "bc", "d"], ["a", "cb", "d"], False),
+    (["abcde"], ["a", "b", "c", "d", "e"], True)])
+def test_array_strings_are_equal(word1, word2, true_false):
+    card = main.Jan08
+    assert card.array_strings_are_equal(card, word1, word2) == true_false
+
+
+@pytest.mark.parametrize("beginWord, endWord, wordList, result", [
+    # "hit" -> "hot" -> "dot" -> "dog" -> "cog"
+    ("hit", "cog", ["hot", "dot", "dog", "lot", "log", "cog"], 5),
+    # The endWord "cog" is not in wordList.
+    ("hit", "cog", ["hot", "dot", "dog", "lot", "log"], 0)
+    ])
+def test_ladder_length(beginWord, endWord, wordList, result):
+    card = main.Jan09
+    assert card.ladder_length(card, beginWord, endWord, wordList) == result
+
+
+@pytest.mark.parametrize("instructions, result", [
+    ([1, 5, 6, 2], 1),
+    ([1, 2, 3, 6, 5, 4], 3),
+    ([1, 3, 3, 3, 2, 4, 2, 1, 2], 4),
+    ([1, 3, 5, 7, 9, 2, 4, 6, 8], 7),
+    ([9, 8, 7, 6, 5, 4, 3, 2, 1], 0),
+    ([1, 2, 3, 4, 5, 6, 7, 8, 9], 0)
+    ])
+def test_create_sorted_array(instructions, result):
+    card = main.Jan10
+    assert card.create_sorted_array(card, instructions) == result

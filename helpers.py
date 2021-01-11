@@ -2,7 +2,7 @@ from models import ListNode, TreeNode
 from typing import List
 
 
-def tree_constructor(node_list: List[int]) -> TreeNode:
+def binary_tree_constructor(node_list: List[int]) -> TreeNode:
     """Returns root of tree constructed from List[int]."""
     root = TreeNode(node_list[0])
     current = [root]
