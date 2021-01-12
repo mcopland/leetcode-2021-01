@@ -460,3 +460,53 @@ class Jan10:
             nums[right:right] = [val]
 
         return cost % (10**9 + 7)
+
+
+# merge
+class Jan11:
+    def merge(self, nums1: List[int], m: int, nums2: List[int],
+              n: int) -> None:
+        """Merge Sorted Array
+
+        Given two sorted integer arrays `nums1` and `nums2`, merge `nums2` into
+        `nums1` as one sorted array.
+
+        The number of elements initialized in `nums1` and `nums2` are `m` and
+        `n` respectively. You may assume that `nums1` has enough space (size
+        that is equal to `m` + `n`) to hold additional elements from `nums2`.
+
+        Do not return anything, modify `nums1` in-place instead.
+
+        Constraints:
+        - 0 <= `n`, `m` <= 200
+        - 1 <= `n` + `m` <= 200
+        - `nums1.length` == `m` + `n`
+        - `nums2.length` == `n`
+        - -109 <= `nums1[i]`, `nums2[i]` <= 109
+
+        Hints:
+        - You can easily solve this problem if you simply think about two
+        elements at a time rather than two arrays. We know that each of the
+        individual arrays is sorted. What we don't know is how they will
+        intertwine. Can we take a local decision and arrive at an optimal
+        solution?
+        - If you simply consider one element each at a time from the two arrays
+        and make a decision and proceed accordingly, you will arrive at the
+        optimal solution.
+        """
+        i = m + n - 1
+        ptr1, ptr2 = m - 1, n - 1
+
+        while ptr1 >= 0 and ptr2 >= 0:
+            if nums1[ptr1] > nums2[ptr2]:
+                nums1[i] = nums1[ptr1]
+                ptr1 -= 1
+            else:
+                nums1[i] = nums2[ptr2]
+                ptr2 -= 1
+            i -= 1
+
+        while ptr2 >= 0:
+            nums1[i] = nums2[ptr2]
+            i -= 1
+            ptr2 -= 1

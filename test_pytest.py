@@ -168,3 +168,18 @@ def test_ladder_length(beginWord, endWord, wordList, result):
 def test_create_sorted_array(instructions, result):
     card = main.Jan10
     assert card.create_sorted_array(card, instructions) == result
+
+
+@pytest.mark.parametrize("nums1, m, nums2, n", [
+    ([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3),
+    ([1], 1, [], 0),
+    ([1, 3, 5, 7, 9, 0, 0, 0, 0], 5, [2, 4, 6, 8], 4),
+    ([5, 6, 7, 8, 9, 0, 0, 0, 0], 5, [1, 2, 3, 4], 4),
+    ([1, 2, 3, 4, 0, 0], 4, [5, 6], 2),
+    ([5, 6, 0, 0, 0, 0], 2, [1, 2, 3, 4], 4)
+    ])
+def test_merge(nums1, m, nums2, n):
+    card = main.Jan11
+    result = sorted(nums1[:m] + nums2)
+    card.merge(card, nums1, m, nums2, n)
+    assert nums1 == result
