@@ -510,3 +510,48 @@ class Jan11:
             nums1[i] = nums2[ptr2]
             i -= 1
             ptr2 -= 1
+
+
+# addTwoNumbers
+class Jan12:
+    def add_two_numbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        """Add Two Numbers
+        You are given two non-empty linked lists representing two non-negative
+        integers. The digits are stored in reverse order, and each of their
+        nodes contains a single digit. Add the two numbers and return the sum
+        as a linked list.
+
+        You may assume the two numbers do not contain any leading zero, except
+        the number 0 itself.
+
+        Constraints:
+        - The number of nodes in each linked list is in the range [1, 100].
+        - 0 <= Node.val <= 9
+        - It is guaranteed that the list represents a number that does not have
+        leading zeros.
+        """
+        l1_sum = l2_sum = 0
+
+        factor = 1
+        while l1:
+            l1_sum += l1.val * factor
+            factor *= 10
+            l1 = l1.next
+
+        factor = 1
+        while l2:
+            l2_sum += l2.val * factor
+            factor *= 10
+            l2 = l2.next
+
+        res = ListNode()
+        curr = res
+        total = l1_sum + l2_sum
+        while total > 0:
+            curr.val = total % 10
+            total //= 10
+            if total > 0:
+                curr.next = ListNode()
+                curr = curr.next
+
+        return res

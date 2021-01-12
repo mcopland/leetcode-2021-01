@@ -183,3 +183,26 @@ def test_merge(nums1, m, nums2, n):
     result = sorted(nums1[:m] + nums2)
     card.merge(card, nums1, m, nums2, n)
     assert nums1 == result
+
+
+@pytest.mark.parametrize("nodes1, nodes2, result", [
+    ([2, 4, 3], [5, 6, 4], [7, 0, 8]),
+    ([0], [0], [0]),
+    ([9, 9, 9, 9, 9, 9, 9], [9, 9, 9, 9], [8, 9, 9, 9, 0, 0, 0, 1]),
+    ([1, 1, 2], [3, 4, 5], [4, 5, 7]),
+    ([9], [1, 0, 0, 0, 0, 1], [0, 1, 0, 0, 0, 1]),
+    ([7, 4, 5], [3, 5, 4, 9], [0, 0, 0, 0, 1])
+    ])
+def test_add_two_numbers(nodes1, nodes2, result):
+    card = main.Jan12
+    l1 = linked_list_constructor(nodes1)
+    l2 = linked_list_constructor(nodes2)
+    expected = linked_list_constructor(result)
+    actual = card.add_two_numbers(card, l1, l2)
+    while expected and actual:
+        if expected.val != actual.val:
+            assert False
+        expected = expected.next
+        actual = actual.next
+
+    assert not expected and not actual
