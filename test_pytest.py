@@ -206,3 +206,15 @@ def test_add_two_numbers(nodes1, nodes2, result):
         actual = actual.next
 
     assert not expected and not actual
+
+
+@pytest.mark.parametrize("people, limit, result", [
+    ([1, 2], 3, 1),
+    ([3, 2, 2, 1], 3, 3),
+    ([3, 5, 3, 4], 5, 4),
+    ([1, 5, 1, 5, 2, 4, 2, 4, 3, 3, 3, 3], 6, 6),
+    ([1, 5, 1, 5, 2, 4, 2, 4, 3, 3, 3, 3], 5, 8),
+    ])
+def test_num_rescue_boats(people, limit, result):
+    card = main.Jan13
+    assert card.num_rescue_boats(card, people, limit) == result

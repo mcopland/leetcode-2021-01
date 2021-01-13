@@ -555,3 +555,36 @@ class Jan12:
                 curr = curr.next
 
         return res
+
+
+# numRescueBoats
+class Jan13:
+    def num_rescue_boats(self, people: List[int], limit: int) -> int:
+        """Boats to Save People
+
+        The i-th person has weight `people[i]`, and each boat can carry a
+        maximum weight of `limit`.
+
+        Each boat carries at most 2 `people` at the same time, provided the sum
+        of the weight of those `people` is at most `limit`.
+
+        Return the minimum number of boats to carry every given person.  (It is
+        guaranteed each person can be carried by a boat.)
+
+        Constraints:
+        - 1 <= `people.length` <= 50000
+        - 1 <= `people[i]` <= `limit` <= 30000
+        """
+        count = 0
+        ptr_min = 0
+        ptr_max = len(people) - 1
+
+        people.sort()
+
+        while ptr_min <= ptr_max:
+            if people[ptr_min] + people[ptr_max] <= limit:
+                ptr_min += 1
+            ptr_max -= 1
+            count += 1
+
+        return count
