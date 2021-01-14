@@ -218,3 +218,13 @@ def test_add_two_numbers(nodes1, nodes2, result):
 def test_num_rescue_boats(people, limit, result):
     card = main.Jan13
     assert card.num_rescue_boats(card, people, limit) == result
+
+
+@pytest.mark.parametrize("nums, x, result", [
+    ([1, 1, 4, 2, 3], 5, 2),
+    ([5, 6, 7, 8, 9], 4, -1),
+    ([3, 2, 20, 1, 1, 3], 10, 5)
+    ])
+def test_min_operations(nums, x, result):
+    card = main.Jan14
+    assert card.min_operations(card, nums, x) == result

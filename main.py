@@ -588,3 +588,44 @@ class Jan13:
             count += 1
 
         return count
+
+
+# minOperations
+class Jan14:
+    def min_operations(self, nums: List[int], x: int) -> int:
+        """Minimum Operations to Reduce X to Zero
+
+        You are given an integer array `nums` and an integer `x`. In one
+        operation, you can either remove the leftmost or the rightmost element
+        from the array `nums` and subtract its value from `x`. Note that this
+        modifies the array for future operations.
+
+        Return the minimum number of operations to reduce `x` to exactly 0 if
+        it's possible, otherwise, return -1.
+
+        Constraints:
+        - 1 <= `nums.length` <= 10^5
+        - 1 <= `nums[i]` <= 10^4
+        - 1 <= `x` <= 10^9
+
+        Hints:
+        - Think in reverse; instead of finding the minimum prefix + suffix,
+          find the maximum subarray.
+        - Finding the maximum subarray is standard and can be done greedily.
+        """
+        # Remove the longest sequence so that what's left is equal to x.
+        current_sum = 0
+        left = 0
+        longest = -1
+        target = sum(nums) - x
+
+        for right in range(len(nums)):
+            current_sum += nums[right]
+            while current_sum > target and left <= right:
+                current_sum -= nums[left]
+                left += 1
+
+            if current_sum == target:
+                longest = max(longest, right - left + 1)
+
+        return len(nums) - longest if longest != -1 else -1
