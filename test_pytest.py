@@ -230,7 +230,7 @@ def test_min_operations(nums, x, result):
     assert card.min_operations(card, nums, x) == result
 
 
-@pytest.mark.parametrize("nestedList, result", [
+@pytest.mark.parametrize("nested_list, result", [
     # Four 1's at depth 2, one 2 at depth 1.
     # 1*1 + 1*1 + 2*2 + 1*1 + 1*1 = 10.
     ([[1, 1], 2, [1, 1]], 10),
@@ -239,9 +239,9 @@ def test_min_operations(nums, x, result):
     ([1, [4, [6]]], 27),
     ([0], 0)
     ])
-def test_depth_sum(nestedList, result):
+def test_depth_sum(nested_list, result):
     card = main.Jan15
-    assert card.depth_sum(card, nestedList) == result
+    assert card.depth_sum(card, nested_list) == result
 
 
 @pytest.mark.parametrize("n, result", [
@@ -254,3 +254,15 @@ def test_depth_sum(nestedList, result):
 def test_get_maximum_generated(n, result):
     card = main.Jan15
     assert card.get_maximum_generated(card, n) == result
+
+
+@pytest.mark.parametrize("nums, k, result", [
+    ([3, 2, 1, 5, 6, 4], 2, 5),
+    ([3, 2, 3, 1, 2, 4, 5, 5, 6], 4, 4),
+    ([1], 1, 1),
+    ([1, 2, 3, 4, 5, 6], 1, 6),
+    ([2, 2, 2, 2, 2, 5, 2, 2, 2], 1, 5)
+    ])
+def test_find_kth_largest(nums, k, result):
+    card = main.Jan16
+    assert card.find_kth_largest(card, nums, k) == result

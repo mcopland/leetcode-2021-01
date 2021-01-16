@@ -701,3 +701,20 @@ class Jan15:
                 nums.append(nums[i//2] + nums[i//2 + 1])
 
         return max(nums)
+
+
+# findKthLargest
+class Jan16:
+    def find_kth_largest(self, nums: List[int], k: int) -> int:
+        """Kth Largest Element in an Array
+
+        Find the `k`th largest element in an unsorted array. Note that it is
+        the `k`th largest element in the sorted order, not the `k`th distinct
+        element.
+
+        Note:
+        - You may assume k is always valid, 1 ≤ k ≤ array's length.
+        """
+        # nums.sort(reverse=True)
+        # return nums[k-1]
+        return sorted(nums, reverse=True)[k-1]
