@@ -1,4 +1,4 @@
-from models import ListNode, Node, TreeNode
+from models import ListNode, NestedInteger, Node, TreeNode
 from typing import List
 
 
@@ -629,3 +629,75 @@ class Jan14:
                 longest = max(longest, right - left + 1)
 
         return len(nums) - longest if longest != -1 else -1
+
+
+# depthSum and getMaximumGenerated
+class Jan15:
+    def depth_sum(self, nestedList: List[NestedInteger]) -> int:
+        """Nested List Weight Sum
+
+        You are given a nested list of integers `nestedList`. Each element is
+        either an integer or a list whose elements may also be integers or
+        other lists.
+
+        The depth of an integer is the number of lists that it is inside of.
+        For example, the nested list [1,[2,2],[[3],2],1] has each integer's
+        value set to its depth.
+
+        Return the sum of each integer in `nestedList` multiplied by its depth.
+
+        Constraints:
+        - 1 <= `nestedList.length` <= 50
+        - The values of the integers in the nested list is in the range
+          [-100, 100].
+        - The maximum depth of any integer is less than or equal to 50.
+        """
+        def dfs(nested_list, depth):
+            total = 0
+
+            for i in nested_list:
+                # # if isinstance(i, int):
+                #     total += i * depth
+                # else:
+                #     total += dfs(i, depth + 1)
+                if i.isInteger():
+                    total += i.getInteger() * depth
+                else:
+                    total += dfs(i.getList(), depth + 1)
+
+            return total
+
+        return dfs(nestedList, 1)
+
+    def get_maximum_generated(self, n: int) -> int:
+        """Get Maximum in Generated Array
+
+        You are given an integer `n`. An array nums of length `n` + 1 is
+        generated in the following way:
+        - `nums[0]` = 0
+        - `nums[1]` = 1
+        - `nums[2 * i]` = `nums[i]` when 2 <= 2 * i <= `n`
+        - `nums[2 * i + 1]` = `nums[i]` + `nums[i + 1]` when 2 <= 2 * i + 1 <=
+          `n`
+
+        Return the maximum integer in the array nums​​​.
+
+        Constraints:
+        - 0 <= n <= 100
+
+        Hints:
+        - Try generating the array.
+        - Make sure not to fall in the base case of 0.
+        """
+        if n == 0:
+            return 0
+
+        nums = [0, 1]
+
+        for i in range(2, n+1):
+            if i % 2 == 0:
+                nums.append(nums[i//2])
+            else:
+                nums.append(nums[i//2] + nums[i//2 + 1])
+
+        return max(nums)

@@ -228,3 +228,29 @@ def test_num_rescue_boats(people, limit, result):
 def test_min_operations(nums, x, result):
     card = main.Jan14
     assert card.min_operations(card, nums, x) == result
+
+
+@pytest.mark.parametrize("nestedList, result", [
+    # Four 1's at depth 2, one 2 at depth 1.
+    # 1*1 + 1*1 + 2*2 + 1*1 + 1*1 = 10.
+    ([[1, 1], 2, [1, 1]], 10),
+    # One 1 at depth 1, one 4 at depth 2, and one 6 at depth 3.
+    # 1*1 + 4*2 + 6*3 = 27.
+    ([1, [4, [6]]], 27),
+    ([0], 0)
+    ])
+def test_depth_sum(nestedList, result):
+    card = main.Jan15
+    assert card.depth_sum(card, nestedList) == result
+
+
+@pytest.mark.parametrize("n, result", [
+    (7, 3),
+    (2, 1),
+    (3, 2),
+    (0, 0),
+    (100, 21)
+    ])
+def test_get_maximum_generated(n, result):
+    card = main.Jan15
+    assert card.get_maximum_generated(card, n) == result
