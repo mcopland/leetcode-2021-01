@@ -1,3 +1,4 @@
+from math import comb
 from models import ListNode, NestedInteger, Node, TreeNode
 from typing import List
 
@@ -718,3 +719,44 @@ class Jan16:
         # nums.sort(reverse=True)
         # return nums[k-1]
         return sorted(nums, reverse=True)[k-1]
+
+
+# countVowelStrings
+class Jan17:
+    def count_vowel_strings(self, n: int) -> int:
+        """Count Sorted Vowel Strings
+
+        Given an integer `n`, return the number of strings of length `n` that
+        consist only of vowels (a, e, i, o, u) and are lexicographically
+        sorted.
+
+        A string `s` is lexicographically sorted if for all valid `i`, `s[i]`
+        is the same as or comes before `s[i+1]` in the alphabet.
+
+        Constraints:
+        - 1 <= `n` <= 50
+
+        Hints:
+        - For each character, its possible values will depend on the value of
+        its previous character, because it needs to be not smaller than it.
+        - Think backtracking. Build a recursive function count(`n`,
+        `last_character`) that counts the number of valid strings of length `n`
+        and whose first characters are not less than last_character.
+        - In this recursive function, iterate on the possible characters for
+        the first character, which will be all the vowels not less than
+        last_character, and for each possible value `c`, increase the answer by
+        count(`n-1`, `c`).
+        """
+        # res = 0
+
+        # for i in range(n + 1):
+        #     sum = 0
+        #     for j in range(i + 1):
+        #         sum += j + 1
+        #         res += sum
+
+        # return res
+
+        # return (n + 1) * (n + 2) * (n + 3) * (n + 4) // 24
+
+        return comb(n + 4, 4)

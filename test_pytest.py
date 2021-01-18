@@ -266,3 +266,23 @@ def test_get_maximum_generated(n, result):
 def test_find_kth_largest(nums, k, result):
     card = main.Jan16
     assert card.find_kth_largest(card, nums, k) == result
+
+
+@pytest.mark.parametrize("n, result", [
+    # The 5 sorted strings that consist of vowels only are:
+    # ["a", "e", "i", "o", "u"].
+    (1, 5),
+    # The 15 sorted strings that consist of vowels only are:
+    # ["aa", "ae", "ai", "ao", "au",
+    #  "ee", "ei", "eo", "eu", "ii",
+    #  "io", "iu", "oo", "ou", "uu"].
+    # Note that "ea" is not a valid string since 'e' comes after 'a' in the
+    # alphabet.
+    (2, 15),
+    (25, 23751),
+    (33, 66045),
+    (50, 316251)
+    ])
+def test_count_vowel_strings(n, result):
+    card = main.Jan17
+    assert card.count_vowel_strings(card, n) == result
