@@ -286,3 +286,16 @@ def test_find_kth_largest(nums, k, result):
 def test_count_vowel_strings(n, result):
     card = main.Jan17
     assert card.count_vowel_strings(card, n) == result
+
+
+@pytest.mark.parametrize("nums, k, result", [
+    ([1, 2, 3, 4], 5, 2),
+    ([3, 1, 3, 4, 3], 6, 1),
+    ([1], 1, 0),
+    ([1, 1], 2, 1),
+    ([1, 2, 3, 7, 7, 7, 4, 5, 6], 7, 3),
+    ([3, 1, 5, 1, 1, 1, 1, 1, 2, 2, 3, 2, 2], 1, 0)
+    ])
+def test_max_operations(nums, k, result):
+    card = main.Jan18
+    assert card.max_operations(card, nums, k) == result

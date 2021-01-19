@@ -1,3 +1,4 @@
+from collections import defaultdict
 from math import comb
 from models import ListNode, NestedInteger, Node, TreeNode
 from typing import List
@@ -760,3 +761,49 @@ class Jan17:
         # return (n + 1) * (n + 2) * (n + 3) * (n + 4) // 24
 
         return comb(n + 4, 4)
+
+
+# maxOperations
+class Jan18:
+    def max_operations(self, nums: List[int], k: int) -> int:
+        """Max Number of K-Sum Pairs
+
+        You are given an integer array `nums` and an integer `k`.
+
+        In one operation, you can pick two numbers from the array whose sum
+        equals `k` and remove them from the array.
+
+        Return the maximum number of operations you can perform on the array.
+
+        Constraints:
+        - 1 <= `nums.length` <= 10^5
+        - 1 <= `nums[i]` <= 10^9
+        - 1 <= `k` <= 10^9
+
+        Hints:
+        - The abstract problem asks to count the number of disjoint pairs with
+          a given sum `k`.
+        - For each possible value x, it can be paired up with `k` - x.
+        - The number of such pairs equals to min(count(x), count(`k` - x)),
+          unless that x = `k` / 2, where the number of such pairs will be floor
+          count(x) / 2).
+        """
+        count = 0
+        tracker = defaultdict(int)
+        # unpaired = set()
+
+        # for i in nums:
+        #     if abs(k - i) in unpaired:
+        #         unpaired.remove(k-i)
+        #         count += 1
+        #     else:
+        #         unpaired.add(i)
+
+        for i in nums:
+            if tracker[k - i] > 0:
+                tracker[k - i] -= 1
+                count += 1
+            else:
+                tracker[i] += 1
+
+        return count
