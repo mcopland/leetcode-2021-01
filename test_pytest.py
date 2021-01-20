@@ -299,3 +299,15 @@ def test_count_vowel_strings(n, result):
 def test_max_operations(nums, k, result):
     card = main.Jan18
     assert card.max_operations(card, nums, k) == result
+
+
+@pytest.mark.parametrize("s, result", [
+    ("babad", "bab"),
+    ("cbbd", "bb"),
+    ("a", "a"),
+    ("ac", "a"),
+    ("abc1c23", "c1c")
+    ])
+def test_longest_palindrome(s, result):
+    card = main.Jan19
+    assert card.longest_palindrome(card, s) == result
