@@ -327,3 +327,15 @@ def test_longest_palindrome(s, result):
 def test_is_valid(s, result):
     card = main.Jan20
     assert card.is_valid(card, s) == result
+
+
+@pytest.mark.parametrize("nums, k, result", [
+    ([3, 5, 2, 6], 2, [2, 6]),
+    ([2, 4, 3, 3, 5, 4, 9, 6], 4, [2, 3, 3, 4]),
+    ([1], 1, [1]),
+    ([1, 2, 3, 4, 5], 5, [1, 2, 3, 4, 5]),
+    ([0, 1, 2, 3], 2, [0, 1])
+    ])
+def test_most_competitive(nums, k, result):
+    card = main.Jan21
+    assert card.most_competitive(card, nums, k) == result
