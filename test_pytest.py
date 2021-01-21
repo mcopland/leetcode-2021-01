@@ -311,3 +311,19 @@ def test_max_operations(nums, k, result):
 def test_longest_palindrome(s, result):
     card = main.Jan19
     assert card.longest_palindrome(card, s) == result
+
+
+@pytest.mark.parametrize("s, result", [
+    ("()", True),
+    ("()[]{}", True),
+    ("(]", False),
+    ("([)]", False),
+    ("{[]}", True),
+    ("{{}[][[[]]]}", True),
+    ("{{({})}}", True),
+    (")(", False),
+    ("[", False)
+    ])
+def test_is_valid(s, result):
+    card = main.Jan20
+    assert card.is_valid(card, s) == result

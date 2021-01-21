@@ -852,3 +852,49 @@ class Jan19:
             left -= 1
             right += 1
         return s[left+1:right]
+
+
+# isValid
+class Jan20:
+    def is_valid(self, s: str) -> bool:
+        """Valid Parentheses
+
+        Given a string `s` containing just the characters '(', ')', '{', '}',
+        '[' and ']', determine if the input string is valid.
+
+        An input string is valid if:
+        - Open brackets must be closed by the same type of brackets.
+        - Open brackets must be closed in the correct order.
+
+        Constraints:
+        - 1 <= `s.length` <= 104
+        - `s` consists of parentheses only '()[]{}'.
+
+        Hints:
+        - An interesting property about a valid parenthesis expression is that
+          a sub-expression of a valid expression should also be a valid
+          expression. Can we exploit this recursive structure somehow?
+        - What if whenever we encounter a matching pair of parenthesis in the
+          expression, we simply remove it from the expression? This would keep
+          on shortening the expression.
+        - The stack data structure can come in handy here in representing this
+          recursive structure of the problem. We can't really process this from
+          the inside out because we don't have an idea about the overall
+          structure. But, the stack can help us process this recursively i.e.
+          from outside to inwards.
+        """
+        stack = []
+        pairs = {')': '(', '}': '{', ']': '['}
+
+        # Add opening brackets to stack, pop if a match is found.
+        for char in s:
+            if char in pairs:
+                stack_top = stack.pop() if stack else '!'
+                if pairs[char] != stack_top:
+                if pairs[char] != stack_top:
+                    return False
+            else:
+                stack.append(char)
+
+        # String is valid if stack is empty.
+        return not stack
