@@ -339,3 +339,26 @@ def test_is_valid(s, result):
 def test_most_competitive(nums, k, result):
     card = main.Jan21
     assert card.most_competitive(card, nums, k) == result
+
+
+
+@pytest.mark.parametrize("s, t, true_false", [
+    ("ab", "acb", True),
+    ("", "", False),
+    ("a", "", True),
+    ("", "A", True)
+    ])
+def test_is_one_edit_distance(s, t, true_false):
+    card = main.Jan22
+    assert card.is_one_edit_distance(card, s, t) == true_false
+
+
+@pytest.mark.parametrize("word1, word2, true_false", [
+    ("abc", "bca", True),
+    ("a", "aa", False),
+    ("cabbba", "abbccc", True),
+    ("cabbba", "aabbss", False)
+    ])
+def test_close_strings(word1, word2, true_false):
+    card = main.Jan22
+    assert card.close_strings(card, word1, word2) == true_false

@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import Counter, defaultdict
 from math import comb
 from models import ListNode, NestedInteger, Node, TreeNode
 from typing import List
@@ -933,3 +933,77 @@ class Jan21:
             if len(stack) < k:
                 stack.append(num)
         return stack
+
+
+# isOneEditDistance and closeStrings
+class Jan22:
+    def is_one_edit_distance(self, s: str, t: str) -> bool:
+        """One Edit Distance
+
+        Given two strings `s` and `t`, return true if they are both one edit
+        distance apart, otherwise return false.
+
+        A string `s` is said to be one distance apart from a string `t` if you
+        can:
+        - Insert exactly one character into `s` to get `t`.
+        - Delete exactly one character from `s` to get `t`.
+        - Replace exactly one character of `s` with a different character to
+          get `t`.
+
+        Constraints:
+        - 0 <= `s.length` <= 10^4
+        - 0 <= `t.length` <= 10^4
+        - `s` and `t` consist of lower-case letters, upper-case letters and/or
+          digits.
+        """
+        # Ensure that s is shorter than t.
+        if len(s) > len(t):
+            s, t = t, s
+
+        # Length difference cannot be more than 1.
+        if len(t) - len(s) > 1:
+            return False
+
+        for i in range(len(s)):
+            if s[i] != t[i]:
+                if len(s) == len(t):
+                    return s[i + 1:] == t[i + 1:]
+                else:
+                    return s[i:] == t[i + 1:]
+
+        return len(s) + 1 == len(t)
+
+    def close_strings(self, word1: str, word2: str) -> bool:
+        """Determine if Two Strings Are Close
+
+        Two strings are considered close if you can attain one from the other
+        using the following operations:
+        - Operation 1: Swap any two existing characters.
+          - For example, abcde -> aecdb
+        - Operation 2: Transform every occurrence of one existing character
+          into another existing character, and do the same with the other
+          character.
+          - For example, aacabb -> bbcbaa (all a's turn into b's, and all b's
+            turn into a's)
+
+        You can use the operations on either string as many times as necessary.
+
+        Given two strings, `word1` and `word2`, return true if `word1` and
+        `word2` are close, and false otherwise.
+
+        Constraints:
+        - 1 <= `word1.length`, `word2.length` <= 10^5
+        - `word1` and `word2` contain only lowercase English letters.
+
+        Hints:
+        - Operation 1 allows you to freely reorder the string.
+        - Operation 2 allows you to freely reassign the letters' frequencies.
+        """
+        if len(word1) != len(word2):
+            return False
+
+        count1 = Counter(word1)
+        count2 = Counter(word2)
+
+        return count1.keys() == count2.keys()\
+            and Counter(count1.values()) == Counter(count2.values())
