@@ -374,3 +374,28 @@ def test_close_strings(word1, word2, true_false):
 def test_diagonal_sort(mat, result):
     card = main.Jan23
     assert card.diagonal_sort(card, mat) == result
+
+
+@pytest.mark.parametrize("lists, result", [
+    ([linked_list_constructor([1, 4, 5]),
+      linked_list_constructor([1, 3, 4]),
+      linked_list_constructor([2, 6])],
+     [1, 1, 2, 3, 4, 4, 5, 6]),
+    ([], []),
+    ([[]], []),
+    ([linked_list_constructor([2, 6]),
+      linked_list_constructor([1, 3, 4]),
+      linked_list_constructor([1, 4, 5])],
+     [1, 1, 2, 3, 4, 4, 5, 6])
+    ])
+def test_merge_k_lists(lists, result):
+    card = main.Jan24
+    expected = linked_list_constructor(result)
+    actual = card.merge_k_lists(card, lists)
+    while expected and actual:
+        if expected.val != actual.val:
+            assert False
+        expected = expected.next
+        actual = actual.next
+
+    assert not expected and not actual

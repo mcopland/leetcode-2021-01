@@ -1054,3 +1054,35 @@ class Jan23:
                 mat[i][j] = d[i - j].pop()
 
         return mat
+
+
+# mergeKLists
+class Jan24:
+    def merge_k_lists(self, lists: List[ListNode]) -> ListNode:
+        """Merge k Sorted Lists
+
+        You are given an array of k linked-lists `lists`, each linked-list is
+        sorted in ascending order.
+
+        Merge all the linked-lists into one sorted linked-list and return it.
+
+        Constraints:
+        - k == `lists.length`
+        - 0 <= k <= 10^4
+        - 0 <= `lists[i].length` <= 500
+        - -10^4 <= `lists[i][j]` <= 10^4
+        - `lists[i]` is sorted in ascending order.
+        - The sum of `lists[i].length` won't exceed 10^4.
+        """
+        nodes = []
+        head = curr = ListNode(0)
+
+        for k in lists:
+            while k:
+                nodes.append(k.val)
+                k = k.next
+        for x in sorted(nodes):
+            curr.next = ListNode(x)
+            curr = curr.next
+
+        return head.next
