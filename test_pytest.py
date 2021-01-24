@@ -341,7 +341,6 @@ def test_most_competitive(nums, k, result):
     assert card.most_competitive(card, nums, k) == result
 
 
-
 @pytest.mark.parametrize("s, t, true_false", [
     ("ab", "acb", True),
     ("", "", False),
@@ -362,3 +361,16 @@ def test_is_one_edit_distance(s, t, true_false):
 def test_close_strings(word1, word2, true_false):
     card = main.Jan22
     assert card.close_strings(card, word1, word2) == true_false
+
+
+@pytest.mark.parametrize("mat, result", [
+    ([[3, 3, 1, 1], [2, 2, 1, 2], [1, 1, 1, 2]],
+     [[1, 1, 1, 1], [1, 2, 2, 2], [1, 2, 3, 3]]),
+    ([[1, 2, 3], [3, 2, 1], [2, 1, 3]],
+     [[1, 1, 3], [1, 2, 2], [2, 3, 3]]),
+    ([[1, 2], [3, 2], [2, 1], [5, 6], [6, 3], [9, 1]],
+     [[1, 2], [1, 2], [2, 3], [3, 6], [1, 5], [9, 6]])
+    ])
+def test_diagonal_sort(mat, result):
+    card = main.Jan23
+    assert card.diagonal_sort(card, mat) == result
