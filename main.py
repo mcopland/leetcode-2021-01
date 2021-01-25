@@ -1086,3 +1086,36 @@ class Jan24:
             curr = curr.next
 
         return head.next
+
+
+# kLengthApart
+class Jan25:
+    def k_length_apart(self, nums: List[int], k: int) -> bool:
+        """Check If All 1's Are at Least Length K Places Away
+
+        Given an array `nums` of 0's and 1's and an integer `k`, return True if
+        all 1's are at least `k` places away from each other, otherwise return
+        False.
+
+        Constraints:
+        - 1 <= `nums.length` <= 10^5
+        - 0 <= `k` <= `nums.length`
+        - `nums[i]` is 0 or 1
+
+        Hint:
+        - Each time you find a number 1, check whether or not it is `k` or more
+        places away from the next one. If it's not, return false.
+        """
+        distance = k
+
+        for num in nums:
+            if num == 1:
+                if distance < k:
+                    return False
+                # Reset distance.
+                distance = 0
+            else:
+                # Increase distance between 1's.
+                distance += 1
+
+        return True

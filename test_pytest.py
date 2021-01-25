@@ -399,3 +399,17 @@ def test_merge_k_lists(lists, result):
         actual = actual.next
 
     assert not expected and not actual
+
+
+@pytest.mark.parametrize("nums, k, true_false", [
+    ([1, 0, 0, 0, 1, 0, 0, 1], 2, True),
+    ([1, 0, 0, 1, 0, 1], 2, False),
+    ([1, 1, 1, 1, 1], 0, True),
+    ([0, 1, 0, 1], 1, True),
+    ([0], 1, True),
+    ([1], 1, True),
+    ([0, 0, 1, 0, 0], 3, True)
+    ])
+def test_k_length_apart(nums, k, true_false):
+    card = main.Jan25
+    assert card.k_length_apart(card, nums, k) == true_false
