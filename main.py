@@ -1104,7 +1104,7 @@ class Jan25:
 
         Hint:
         - Each time you find a number 1, check whether or not it is `k` or more
-        places away from the next one. If it's not, return false.
+          places away from the next one. If it's not, return false.
         """
         distance = k
 
@@ -1119,3 +1119,95 @@ class Jan25:
                 distance += 1
 
         return True
+
+
+# minimumEffortPath
+class Jan26:
+    def minimum_effort_path(self, heights: List[List[int]]) -> int:
+        """Path With Minimum Effort
+
+        You are a hiker preparing for an upcoming hike. You are given
+        `heights`, a 2D array of size rows x columns, where `heights[row][col]`
+        represents the height of cell (row, col). You are situated in the
+        top-left cell, (0, 0), and you hope to travel to the bottom-right cell,
+        (rows-1, columns-1) (i.e., 0-indexed). You can move up, down, left, or
+        right, and you wish to find a route that requires the minimum effort.
+
+        A route's effort is the maximum absolute difference in `heights`
+        between two consecutive cells of the route.
+
+        Return the minimum effort required to travel from the top-left cell to
+        the bottom-right cell.
+
+        Constraints:
+        - rows == `heights.length`
+        - columns == `heights[i].length`
+        - 1 <= rows, columns <= 100
+        - 1 <= `heights[i][j]` <= 10^6
+
+        Hints:
+        - Consider the grid as a graph, where adjacent cells have an edge with
+          cost of the difference between the cells.
+        - If you are given threshold k, check if it is possible to go from
+          (0, 0) to (n-1, m-1) using only edges of ≤ k cost.
+        - Binary search the k value.
+        """
+        # Binary Search using DFS
+        # row = len(heights)
+        # col = len(heights[0])
+
+        # def canReachDestinaton(x, y, mid):
+        #     if x == row-1 and y == col-1:
+        #         return True
+        #     visited[x][y] = True
+        #     for dx, dy in [[0, 1], [1, 0], [0, -1], [-1, 0]]:
+        #         adjacent_x = x + dx
+        #         adjacent_y = y + dy
+        #         if (0 <= adjacent_x < row
+        #                 and 0 <= adjacent_y < col
+        #                 and not visited[adjacent_x][adjacent_y]):
+        #             current_difference = abs(
+        #                 heights[adjacent_x][adjacent_y]-heights[x][y])
+        #             if current_difference <= mid:
+        #                 visited[adjacent_x][adjacent_y] = True
+        #                 if canReachDestinaton(adjacent_x, adjacent_y, mid):
+        #                     return True
+
+        # left = 0
+        # right = 10000000
+        # while left < right:
+        #     mid = (left + right) // 2
+        #     visited = [[False]*col for _ in range(row)]
+        #     if canReachDestinaton(0, 0, mid):
+        #         right = mid
+        #     else:
+        #         left = mid + 1
+
+        # return left
+
+        # Fastest submission (452 vs 1892 ms)
+        import heapq
+
+        m = len(heights)
+        n = len(heights[0])
+        boundary = [(0, 0, 0)]
+        visited = set()
+        ans = 0
+        todo = []
+        while True:
+            if todo:
+                a, i, j = todo.pop()
+            else:
+                a, i, j = heapq.heappop(boundary)
+                ans = a
+            if (i, j) == (m-1, n-1):
+                return ans
+            for x, y in ((i, j-1), (i-1, j), (i+1, j), (i, j+1)):
+                if 0 <= x < m and 0 <= y < n:
+                    if (x, y) not in visited:
+                        d = abs(heights[x][y] - heights[i][j])
+                        if d <= ans:
+                            todo.append((d, x, y))
+                        else:
+                            heapq.heappush(boundary, (d, x, y))
+            visited.add((i, j))

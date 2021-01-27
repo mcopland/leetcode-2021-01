@@ -413,3 +413,14 @@ def test_merge_k_lists(lists, result):
 def test_k_length_apart(nums, k, true_false):
     card = main.Jan25
     assert card.k_length_apart(card, nums, k) == true_false
+
+
+@pytest.mark.parametrize("heights, result", [
+    ([[1, 2, 2], [3, 8, 2], [5, 3, 5]], 2),
+    ([[1, 2, 3], [3, 8, 4], [5, 3, 5]], 1),
+    ([[1, 2, 1, 1, 1], [1, 2, 1, 2, 1], [1, 2, 1, 2, 1], [1, 2, 1, 2, 1],
+     [1, 1, 1, 2, 1]], 0)
+    ])
+def test_minimum_effort_path(heights, result):
+    card = main.Jan26
+    assert card.minimum_effort_path(card, heights) == result
