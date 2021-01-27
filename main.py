@@ -1211,3 +1211,36 @@ class Jan26:
                         else:
                             heapq.heappush(boundary, (d, x, y))
             visited.add((i, j))
+
+
+# concatenatedBinary
+class Jan27:
+    def concatenated_binary(self, n: int) -> int:
+        """Concatenation of Consecutive Binary Numbers
+
+        Given an integer `n`, return the decimal value of the binary string
+        formed by concatenating the binary representations of 1 to `n` in
+        order, modulo 10^9 + 7.
+
+        Constraints:
+        - 1 <= `n` <= 105
+
+        Hint:-
+        - Express the `nth` number value in a recursion formula and think about
+        how we can do a fast evaluation.
+        """
+        length = 0
+        result = 0
+        modulo = 10**9 + 7
+
+        # Iterate from 1 to n.
+        for i in range(1, n+1):
+            # Find length of i's binary representation. Increase if power of 2.
+            # & bitwise AND
+            if i & (i-1) == 0:
+                length += 1
+            # Update result to result << length | i.
+            # << bitwise left shift, | bitwise OR
+            result = ((result << length) | i) % modulo
+
+        return result

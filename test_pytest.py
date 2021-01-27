@@ -230,18 +230,18 @@ def test_min_operations(nums, x, result):
     assert card.min_operations(card, nums, x) == result
 
 
-@pytest.mark.parametrize("nested_list, result", [
-    # Four 1's at depth 2, one 2 at depth 1.
-    # 1*1 + 1*1 + 2*2 + 1*1 + 1*1 = 10.
-    ([[1, 1], 2, [1, 1]], 10),
-    # One 1 at depth 1, one 4 at depth 2, and one 6 at depth 3.
-    # 1*1 + 4*2 + 6*3 = 27.
-    ([1, [4, [6]]], 27),
-    ([0], 0)
-    ])
-def test_depth_sum(nested_list, result):
-    card = main.Jan15
-    assert card.depth_sum(card, nested_list) == result
+# @pytest.mark.parametrize("nested_list, result", [
+#     # Four 1's at depth 2, one 2 at depth 1.
+#     # 1*1 + 1*1 + 2*2 + 1*1 + 1*1 = 10.
+#     ([[1, 1], 2, [1, 1]], 10),
+#     # One 1 at depth 1, one 4 at depth 2, and one 6 at depth 3.
+#     # 1*1 + 4*2 + 6*3 = 27.
+#     ([1, [4, [6]]], 27),
+#     ([0], 0)
+#     ])
+# def test_depth_sum(nested_list, result):
+#     card = main.Jan15
+#     assert card.depth_sum(card, nested_list) == result
 
 
 @pytest.mark.parametrize("n, result", [
@@ -424,3 +424,14 @@ def test_k_length_apart(nums, k, true_false):
 def test_minimum_effort_path(heights, result):
     card = main.Jan26
     assert card.minimum_effort_path(card, heights) == result
+
+
+@pytest.mark.parametrize("n, result", [
+    (1, 1),
+    (3, 27),
+    (12, 505_379_714),
+    (100_000, 757_631_812)
+    ])
+def test_concatenated_binary(n, result):
+    card = main.Jan27
+    assert card.concatenated_binary(card, n) == result
