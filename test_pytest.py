@@ -435,3 +435,43 @@ def test_minimum_effort_path(heights, result):
 def test_concatenated_binary(n, result):
     card = main.Jan27
     assert card.concatenated_binary(card, n) == result
+
+
+@pytest.mark.parametrize("n, k, result", [
+    (3, 27, "aay"),
+    (5, 73, "aaszz"),
+    (1, 1, "a"),
+    (1, 15, "o"),
+    (26, 351, "aaaaaaaaaaaaazzzzzzzzzzzzz"),
+    (5, 130, "zzzzz")
+    ])
+def test_get_smallest_string(n, k, result):
+    card = main.Jan28
+    assert card.get_smallest_string(card, n, k) == result
+
+
+@pytest.mark.parametrize("grid, result", [
+    ([[1, 0, 0, 1, 0],
+      [0, 0, 1, 0, 1],
+      [0, 0, 0, 1, 0],
+      [1, 0, 1, 0, 1]],
+     1),
+    ([[1, 1, 1],
+      [1, 1, 1],
+      [1, 1, 1]],
+     9),
+    ([[1, 1, 1, 1]], 0)
+    ])
+def test_count_corner_rectangles(grid, result):
+    card = main.Jan29
+    assert card.count_corner_rectangles(card, grid) == result
+
+
+@pytest.mark.parametrize("nums, result", [
+    ([1, 2, 3, 4], 1),
+    ([4, 1, 5, 20, 3], 3),
+    ([2, 10, 8], 3)
+    ])
+def test_minimum_deviation(nums, result):
+    card = main.Jan30
+    assert card.minimum_deviation(card, nums) == result

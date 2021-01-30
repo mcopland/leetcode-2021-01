@@ -1244,3 +1244,189 @@ class Jan27:
             result = ((result << length) | i) % modulo
 
         return result
+
+
+# getSmallestString
+class Jan28:
+    def get_smallest_string(self, n: int, k: int) -> str:
+        # Initialize result to 'a' * required length
+        res = ['a'] * n
+        # Current value is 'a' * length
+        val = n
+
+        # Iterate backwards
+        for i in range(n-1, -1, -1):
+            if val == k:
+                # Result found
+                break
+            # Remove value of placeholder 'a'
+            val -= 1
+            # Replace with either (k - value) or 'z'
+            res[i] = chr(96 + min(k - val, 26))
+            # Add value of new char
+            val += ord(res[i]) - 96
+
+        return ''.join(res)
+
+
+# countCornerRectangles and verticalTraversal
+class Jan29:
+    def count_corner_rectangles(self, grid: List[List[int]]) -> int:
+        """Number Of Corner Rectangles
+
+        Given a `grid` where each entry is only 0 or 1, find the number of
+        corner rectangles.
+
+        A corner rectangle is 4 distinct 1s on the `grid` that form an
+        axis-aligned rectangle. Note that only the corners need to have the
+        value 1. Also, all four 1s used must be distinct.
+
+        Notes:
+        - The number of rows and columns of `grid` will each be in the range
+          [1, 200].
+        - Each `grid[i][j]` will be either 0 or 1.
+        - The number of 1s in the `grid` will be at most 6000.
+
+        Hint:
+        - For each pair of 1s in the new row (say at `new_row[i]` and
+          `new_row[j]`), we could create more rectangles where that pair forms
+          the base. The number of new rectangles is the number of times some
+          previous row had `row[i] = row[j] = 1`.
+        """
+        ans = 0
+        prevs = []
+
+        for row in grid:
+            ones = {idx for idx, val in enumerate(row) if val}
+            for prev in prevs:
+                matches = len(ones & prev)
+                ans += matches * (matches-1) // 2
+            prevs.append(ones)
+
+        return ans
+
+    def vertical_traversal(self, root: TreeNode) -> List[List[int]]:
+        """Vertical Order Traversal of a Binary Tree
+
+        Given the `root` of a binary tree, calculate the vertical order
+        traversal of the binary tree.
+
+        For each node at position (x, y), its left and right children will be
+        at positions (x - 1, y - 1) and (x + 1, y - 1) respectively.
+
+        The vertical order traversal of a binary tree is a list of non-empty
+        reports for each unique x-coordinate from left to right. Each report is
+        a list of all nodes at a given x-coordinate. The report should be
+        primarily sorted by y-coordinate from highest y-coordinate to lowest.
+        If any two nodes have the same y-coordinate in the report, the node
+        with the smaller value should appear earlier.
+
+        Return the vertical order traversal of the binary tree.
+
+        Constraints:
+        - The number of nodes in the tree is in the range [1, 1000].
+        - 0 <= Node.val <= 1000
+        """
+        # Traverse graph and use dict to group by x.
+        group = defaultdict(list)
+        queue = [(root, 0, 0)]
+
+        for node in queue:
+            if node[0]:
+                point, x, y = node
+                group[x].append((point.val, y))
+                if point.left:
+                    queue.append((point.left, x-1, y+1))
+                if point.right:
+                    queue.append((point.right, x+1, y+1))
+
+        # Group by vertical line.
+        res = []
+        for x in sorted(group):
+            res.append(group[x])
+
+        # Sort by value then depth.
+        for i, item in enumerate(res):
+            item.sort(key=lambda x: (x[1], x[0]))
+            # item.sort(key=lambda x: x[0])
+            # item.sort(key=lambda x: x[1])
+            res[i] = [val for val, y in item]
+
+        return res
+
+
+# minimumDeviation
+class Jan30:
+    def minimum_deviation(self, nums: List[int]) -> int:
+        """Minimize Deviation in Array
+
+        You are given an array `nums` of n positive integers.
+
+        You can perform two types of operations on any element of the array any
+        number of times:
+        - If the element is even, divide it by 2.
+            - For example, if the array is [1, 2, 3, 4], then you can do this
+              operation on the last element, and the array will be
+              [1, 2, 3, 2].
+        - If the element is odd, multiply it by 2.
+            - For example, if the array is [1, 2, 3, 4], then you can do this
+              operation on the first element, and the array will be
+              [2, 2, 3, 4].
+
+        The deviation of the array is the maximum difference between any two
+        elements in the array.
+
+        Return the minimum deviation the array can have after performing some
+        number of operations.
+
+        Constraints:
+        - n == `nums.length`
+        - 2 <= n <= 10^5
+        - 1 <= `nums[i]` <= 10^9
+
+        Hints:
+        - Assume you start with the minimum possible value for each number so
+          you can only multiply a number by 2 till it reaches its maximum
+          possible value.
+        - If there is a better solution than the current one, then it must have
+          either its maximum value less than the current maximum value, or the
+          minimum value larger than the current minimum value.
+        - Since that we only increase numbers (multiply them by 2), we cannot
+          decrease the current maximum value, so we must multiply the current
+          minimum number by 2.
+        """
+        import heapq
+        from math import inf
+
+        evens = []          # Initialize max-heap.
+        deviation = inf     # Deviation result.
+        min_val = inf       # Track smallest element in evens.
+
+        # Since heapq is a min-heap, use negative numbers to mimic a max-heap.
+        for num in nums:
+            # If even, put into heap.
+            if num % 2 == 0:
+                evens.append(-num)
+                min_val = min(min_val, num)
+            # If odd, multiply by 2 and put into heap.
+            else:
+                evens.append(-num*2)
+                min_val = min(min_val, num*2)
+
+        # Convert list into min-heap.
+        heapq.heapify(evens)
+
+        while evens:
+            # Take out max number.
+            current_val = -heapq.heappop(evens)
+            # Update minimum deviation.
+            deviation = min(deviation, current_val-min_val)
+            # If max number is even, divide by 2 and push into evens.
+            if current_val % 2 == 0:
+                min_val = min(min_val, current_val//2)
+                heapq.heappush(evens, -current_val//2)
+            # Repeat until max number in evens is odd.
+            else:
+                break
+
+        return deviation
