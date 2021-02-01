@@ -1430,3 +1430,72 @@ class Jan30:
                 break
 
         return deviation
+
+
+# nextPermutation
+class Jan31:
+    def next_permutation(self, nums: List[int]) -> None:
+        """Next Permutation
+
+        Implement next permutation, which rearranges numbers into the
+        lexicographically next greater permutation of numbers.
+
+        If such an arrangement is not possible, it must rearrange it as the
+        lowest possible order (i.e., sorted in ascending order).
+
+        The replacement must be in place and use only constant extra memory.
+
+        Constraints:
+        - 1 <= `nums.length` <= 100
+        - 0 <= `nums[i]` <= 100
+        """
+        i = j = len(nums)-1
+
+        # Find longest non-increasing suffix.
+        while i > 0 and nums[i-1] >= nums[i]:
+            i -= 1
+        # If nums is in descending order:
+        if i == 0:
+            nums.reverse()
+            return
+
+        # Find rightmost successor to pivot (i-1) in suffix.
+        while nums[j] <= nums[i-1]:
+            j -= 1
+
+        # Swap with pivot.
+        nums[i-1], nums[j] = nums[j], nums[i-1]
+
+        # Reverse suffix.
+        nums[i:] = nums[len(nums)-1: i-1: -1]
+
+    #     # Sample 28 ms submission
+    #     n = len(nums)
+    #     left_idx = self.find_first_decreasing(self, nums)
+    #     if left_idx == n:
+    #         self.reverse(self, nums, 0, n - 1)
+    #         return
+
+    #     right_idx = self.find_first_greater_num(self, nums, left_idx)
+    #     nums[left_idx], nums[right_idx] = nums[right_idx], nums[left_idx]
+    #     self.reverse(self, nums, left_idx + 1, n - 1)
+
+    # def find_first_decreasing(self, nums):
+    #     n = len(nums)
+    #     for i in range(n - 2, -1, -1):
+    #         if nums[i] < nums[i + 1]:
+    #             return i
+
+    #     return n
+
+    # def find_first_greater_num(self, nums, stop):
+    #     n = len(nums)
+    #     for i in range(n - 1, stop, -1):
+    #         if nums[i] > nums[stop]:
+    #             return i
+
+    # def reverse(self, nums, i, j):
+    #     while i < j:
+    #         nums[i], nums[j] = nums[j], nums[i]
+    #         i += 1
+    #         j -= 1

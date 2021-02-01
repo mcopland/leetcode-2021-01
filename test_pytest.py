@@ -475,3 +475,15 @@ def test_count_corner_rectangles(grid, result):
 def test_minimum_deviation(nums, result):
     card = main.Jan30
     assert card.minimum_deviation(card, nums) == result
+
+
+@pytest.mark.parametrize("nums, result", [
+    ([1, 2, 3], [1, 3, 2]),
+    ([3, 2, 1], [1, 2, 3]),
+    ([1, 1, 5], [1, 5, 1]),
+    ([1], [1])
+    ])
+def test_next_permutation(nums, result):
+    card = main.Jan31
+    card.next_permutation(card, nums)
+    assert nums == result
